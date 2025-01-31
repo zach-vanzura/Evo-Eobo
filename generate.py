@@ -1,20 +1,30 @@
 import pyrosim.pyrosim as pyrosim
 
-pyrosim.Start_SDF("boxes.sdf")
 length, width, height = 1, 1, 1
 x, y, z = 0, 0, 0.5
 
+x_root, y_root, z_root = 0, 0, 0.5
+x_child, y_child, z_child = 0, 0, 0.5
 
-for x_ in range(5):
-    z = 0.5
-    length, width, height = 1, 1, 1
-    for y_ in range(5):
-        z = 0.5
-        length, width, height = 1, 1, 1
-        for z_ in range(10):
-            pyrosim.Send_Cube(name="Box", pos=[x + x_, y + y_, z], size=[length, width, height])
-            length, width, height = length * 0.9, width * 0.9, height * 0.9
-            z += height + height * 0.05  # 0.05 is half of the decrease in height
 
-pyrosim.End()
+def create_world():
 
+    pyrosim.Start_SDF("world.sdf")
+    pyrosim.Send_Cube(name="Box", pos=[-3, 3, z], size=[length, width, height])
+    pyrosim.End()
+
+
+def create_robot():
+
+    pyrosim.Start_URDF("body.urdf")
+    pyrosim.Send_Cube(name="Link0", pos=[x_root, y_root, z_root], size=[length, width, height])
+    pyrosim.Send_Joint(name="Link0_Link1", parent="Link0", child="Link1", type="revolute", position=[0, 0, 1])
+    pyrosim.Send_Cube(name="Link1", pos=[x_child, y_child, z_child], size=[length, width, height])
+    pyrosim.Send_Joint(name="Link1_Link2", parent="Link1", child="Link2", type="revolute", position=[0, 0, 1])
+    pyrosim.Send_Cube(name="Link2", pos=[x_child, y_child, z_child], size=[length, width, height])
+
+    pyrosim.End()
+
+
+create_world()
+create_robot()
