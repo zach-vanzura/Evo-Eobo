@@ -8,6 +8,7 @@ MAX_TIME = 1000
 
 # time step motors
 time_step = np.linspace(0, 2 * np.pi, MAX_TIME)
+motor_max_force = 100
 
 # general constants for now...
 amplitude = np.pi / 4
