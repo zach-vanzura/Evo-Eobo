@@ -10,8 +10,6 @@ class SENSOR:
 
     def Get_Value(self, time_step):
         self.values[time_step] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
-        if time_step == c.MAX_TIME - 1:  # accounting for zero indexing
-            print(self.values)
 
     def Save_Values(self):
         np.save(f"./data/{self.linkName}-sensor-value", self.values)
