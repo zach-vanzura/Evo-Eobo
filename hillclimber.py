@@ -3,7 +3,7 @@ import constants as c
 from solution import SOLUTION
 
 
-class HillCLIMBER:
+class HILL_CLIMBER:
     def __init__(self):
         self.parent = SOLUTION()
 

@@ -1,8 +1,8 @@
 import os
-from hillclimber import HillCLIMBER
+from hillclimber import HILL_CLIMBER
 
 
-hc = HillCLIMBER()
+hc = HILL_CLIMBER()
 hc.Evolve()
 hc.Show_Best()
 
