@@ -10,6 +10,7 @@ from world import WORLD
 # naming classes in all caps feels WRONG!
 class SIMULATION:
     def __init__(self, directOrGUI):
+        self.runSetting = directOrGUI
         if directOrGUI == 'DIRECT':
             self.physicsClient = p.connect(p.DIRECT)
         if directOrGUI == 'GUI':
@@ -30,7 +31,8 @@ class SIMULATION:
             self.robot.Sense(time_step)
             self.robot.Think()
             self.robot.Act(time_step)
-            time.sleep(1 / 60)
+            if self.runSetting == 'GUI':
+                time.sleep(1 / 60)
 
     def Get_Fitness(self):
         self.robot.Get_Fitness()
