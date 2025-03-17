@@ -27,3 +27,6 @@ frontLegAmplitude = np.pi / 16
 frontLegFrequency = 20
 frontLegPhaseOffset = 2 * np.pi
 
+# number of generations for evolutionary alg
+numberOfGenerations = 10
+
