@@ -4,7 +4,7 @@ File for simulate.py meant to keep track of constants
 import numpy as np
 
 # max simulation run time
-MAX_TIME = 100
+MAX_TIME = 500
 
 # time step motors
 time_step = np.linspace(0, 2 * np.pi, MAX_TIME)

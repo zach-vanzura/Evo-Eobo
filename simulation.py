@@ -30,7 +30,7 @@ class SIMULATION:
             self.robot.Sense(time_step)
             self.robot.Think()
             self.robot.Act(time_step)
-            # time.sleep(1 / 60)
+            time.sleep(1 / 60)
 
     def Get_Fitness(self):
         self.robot.Get_Fitness()
