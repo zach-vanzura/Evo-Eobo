@@ -9,8 +9,9 @@ from world import WORLD
 
 # naming classes in all caps feels WRONG!
 class SIMULATION:
-    def __init__(self, directOrGUI):
+    def __init__(self, directOrGUI, solutionID):
         self.runSetting = directOrGUI
+        self.solutionID = solutionID
         if directOrGUI == 'DIRECT':
             self.physicsClient = p.connect(p.DIRECT)
         if directOrGUI == 'GUI':
@@ -20,7 +21,7 @@ class SIMULATION:
         p.setGravity(0, 0, -9.8)
 
         self.world = WORLD()
-        self.robot = ROBOT()
+        self.robot = ROBOT(self.solutionID)
 
         pyrosim.Prepare_To_Simulate(self.robot.robotId)
 
@@ -35,7 +36,7 @@ class SIMULATION:
                 time.sleep(1 / 60)
 
     def Get_Fitness(self):
-        self.robot.Get_Fitness()
+        self.robot.Get_Fitness(self.solutionID)
 
     def __del__(self):
         p.disconnect()

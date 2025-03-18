@@ -30,3 +30,5 @@ frontLegPhaseOffset = 2 * np.pi
 # number of generations for evolutionary alg
 numberOfGenerations = 10
 
+# population size for PARALLEL HILL CLIMBER
+populationSize = 10

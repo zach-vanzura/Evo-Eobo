@@ -2,17 +2,31 @@ import numpy as np
 import os
 import pyrosim.pyrosim as pyrosim
 import random as r
+import time
 
 class SOLUTION:
-    def __init__(self):
+    def __init__(self, availableID):
+        self.myID = availableID
         self.weights = np.random.rand(3, 2)  # random 3 X 2 rand array
         self.weights = 2 * self.weights - 1
 
-    def Evaluate(self, directOrGUI):
+
+    def Start_Simulation(self, directOrGUI):
         self.Create_Brain()
-        os.system("python3.11 simulate.py " + directOrGUI)
-        with open("fitness.txt", 'r') as f:
+        os.system("python3.11 simulate.py " + directOrGUI + f" {self.myID}" + " &")
+
+    def Wait_For_Simulation_To_End(self):
+        # allow for the program to create the necessary fitness.txt file for the robot
+        while not os.path.exists(f"fitness{self.myID}.txt"):
+            time.sleep(0.01)
+
+        with open(f"fitness{self.myID}.txt", 'r') as f:
             self.fitness = float(f.read())
+
+        os.system(f"rm fitness{self.myID}.txt")
+
+    def Set_ID(self, availableID):
+        self.myID = availableID
 
 
     # def Create_World(self):
@@ -35,7 +49,7 @@ class SOLUTION:
     #     pyrosim.End()
 
     def Create_Brain(self):
-        pyrosim.Start_NeuralNetwork("brain.nndf")
+        pyrosim.Start_NeuralNetwork(f"brain{self.myID}.nndf")
         pyrosim.Send_Sensor_Neuron(name=0, linkName="Torso")
         pyrosim.Send_Sensor_Neuron(name=1, linkName="BackLeg")
         pyrosim.Send_Sensor_Neuron(name=2, linkName="FrontLeg")

@@ -3,7 +3,7 @@ import constants as c
 from solution import SOLUTION
 
 
-class HillCLIMBER:
+class HILL_CLIMBER:
     def __init__(self):
         self.parent = SOLUTION()
 
@@ -18,7 +18,6 @@ class HillCLIMBER:
         self.child.Evaluate("DIRECT")
         self.Print()
         self.Select()
-
 
     def Spawn(self):
         self.child = copy.deepcopy(self.parent)
