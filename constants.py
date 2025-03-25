@@ -16,6 +16,10 @@ amplitude = np.pi / 8
 frequency = 60
 phaseOffset = 0
 
+# number of sensor and motor neurons
+numSensorNeurons = 9
+numMotorNeurons = 8
+
 
 # Constants for back leg
 backLegAmplitude = np.pi / 8
@@ -27,8 +31,11 @@ frontLegAmplitude = np.pi / 16
 frontLegFrequency = 20
 frontLegPhaseOffset = 2 * np.pi
 
+motorJointRange = 0.2
+
 # number of generations for evolutionary alg
 numberOfGenerations = 10
 
 # population size for PARALLEL HILL CLIMBER
 populationSize = 10
+
