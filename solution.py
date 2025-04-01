@@ -41,28 +41,29 @@ class SOLUTION:
     def Create_Body(self):
         pyrosim.Start_URDF("body.urdf")
 
-        # creating torso and arms
+        # creating torso and arms, all with absolute positions
 
-        pyrosim.Send_Cube(name="Torso", pos=[0, 0, .75], size=[1, 0.5, 1])
+        pyrosim.Send_Cube(name="Torso", pos=[0, 0, 0.8], size=[1, 0.5, 1.6])
 
-        pyrosim.Send_Joint(name="Torso_LeftLeg", parent="Torso", child="LeftLeg", type="revolute",
-                           position=[-0.5, 0, 1], jointAxis="0 1 0")
-        pyrosim.Send_Cube(name="LeftLeg", pos=[-0.5, 0, 0], size=[1, 0.25, 0.25])
+        pyrosim.Send_Joint(name="Torso_LeftArm", parent="Torso", child="LeftArm", type="revolute",
+                           position=[-0.125, 0, 1.2], jointAxis="1 0 0")
 
-        pyrosim.Send_Joint(name="Torso_RightLeg", parent="Torso", child="RightLeg", type="revolute",
-                           position=[0.5, 0, 1], jointAxis="0 1 0")
-        pyrosim.Send_Cube(name="RightLeg", pos=[0.5, 0, 0], size=[1, 0.2, 0.2])
+        pyrosim.Send_Cube(name="LeftArm", pos=[-0.5, 0, 0.8], size=[0.25, 0.25, 1.6])
+
+        pyrosim.Send_Joint(name="Torso_RightArm", parent="Torso", child="RightArm", type="revolute",
+                           position=[0.125, 0, 1.2], jointAxis="1 0 0")
+        pyrosim.Send_Cube(name="RightArm", pos=[0.5, 0, 0.8], size=[0.25, 0.25, 1.6])
 
         pyrosim.End()
 
     def Create_Brain(self):
         pyrosim.Start_NeuralNetwork(f"brain{self.myID}.nndf")
         pyrosim.Send_Sensor_Neuron(name=0, linkName="Torso")
-        pyrosim.Send_Sensor_Neuron(name=1, linkName="LeftLeg")
-        pyrosim.Send_Sensor_Neuron(name=2, linkName="RightLeg")
+        pyrosim.Send_Sensor_Neuron(name=1, linkName="LeftArm")
+        pyrosim.Send_Sensor_Neuron(name=2, linkName="RightArm")
 
-        pyrosim.Send_Motor_Neuron(name=3, jointName="Torso_LeftLeg")
-        pyrosim.Send_Motor_Neuron(name=4, jointName="Torso_RightLeg")
+        pyrosim.Send_Motor_Neuron(name=3, jointName="Torso_LeftArm")
+        pyrosim.Send_Motor_Neuron(name=4, jointName="Torso_RightArm")
 
 
 

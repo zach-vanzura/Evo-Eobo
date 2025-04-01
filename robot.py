@@ -3,7 +3,6 @@ from motor import MOTOR
 import os
 import pyrosim.pyrosim as pyrosim
 import pybullet as p
-import pybullet_data
 from pyrosim.neuralNetwork import NEURAL_NETWORK
 from sensor import SENSOR
 
@@ -45,12 +44,13 @@ class ROBOT:
                 self.motors[jointName].Set_Value(self.robotId, desiredAngle)
 
     def Get_Fitness(self, solutionID):
-        self.stateOfLinkZero = p.getLinkState(self.robotId, 0)
-        self.positionOfLinkZero = self.stateOfLinkZero[0]
-        self.xCoordinateOfLinkZero = self.positionOfLinkZero[0]
+        self.basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)
+        self.basePosition = self.basePositionAndOrientation[0]
+        self.xPosition = self.basePosition[0]
+
 
         with open(f"tmp{solutionID}.txt", 'w') as f:
-            f.write(str(self.xCoordinateOfLinkZero))
+            f.write(str(self.xPosition))
 
         os.system(f"mv tmp{solutionID}.txt fitness{solutionID}.txt")
 

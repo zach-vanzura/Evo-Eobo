@@ -4,7 +4,7 @@ File for simulate.py meant to keep track of constants
 import numpy as np
 
 # max simulation run time
-MAX_TIME = 5000
+MAX_TIME = 500
 
 # time step motors
 time_step = np.linspace(0, 2 * np.pi, MAX_TIME)
@@ -31,7 +31,7 @@ frontLegAmplitude = np.pi / 16
 frontLegFrequency = 20
 frontLegPhaseOffset = 2 * np.pi
 
-motorJointRange = 0.2
+motorJointRange = 2
 
 # number of generations for evolutionary alg
 numberOfGenerations = 1
