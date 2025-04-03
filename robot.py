@@ -26,6 +26,8 @@ class ROBOT:
     def Sense(self, time_step):
         for i in self.sensors:
             self.sensors[i].Get_Value(time_step)
+            if i == ''
+            with open("sensor_values")
 
     def Think(self):
         self.nn.Update()
@@ -46,11 +48,11 @@ class ROBOT:
     def Get_Fitness(self, solutionID):
         self.basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)
         self.basePosition = self.basePositionAndOrientation[0]
-        self.xPosition = self.basePosition[0]
+        self.zPosition = self.basePosition[2]
 
 
         with open(f"tmp{solutionID}.txt", 'w') as f:
-            f.write(str(self.xPosition))
+            f.write(str(self.zPosition))
 
         os.system(f"mv tmp{solutionID}.txt fitness{solutionID}.txt")
 
