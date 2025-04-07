@@ -29,6 +29,7 @@ class ROBOT:
     def Sense(self, time_step):
         for i in self.sensors:
             val = self.sensors[i].Get_Value(time_step)
+            print(val)
             if i == 'LeftArm':
                 self.left_val = val
             if i == 'RightArm':
@@ -55,12 +56,13 @@ class ROBOT:
     def Get_Fitness(self, solutionID):
         self.basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)
         self.basePosition = self.basePositionAndOrientation[0]
+        self.xyPosition = abs(self.basePosition[1] - self.basePosition[0])
         self.zPosition = self.basePosition[2]
 
         on_floor_ratio = self.both_on_floor / c.MAX_TIME
 
         with open(f"tmp{solutionID}.txt", 'w') as f:
-            f.write(str(tuple((self.zPosition, on_floor_ratio))))
+            f.write(str((self.zPosition - self.xyPosition)))
 
         os.system(f"mv tmp{solutionID}.txt fitness{solutionID}.txt")
 

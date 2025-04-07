@@ -47,14 +47,14 @@ class PARALLEL_HILL_CLIMBER:
 
     def Select(self):
         for key in self.parents.keys():
-            if self.parents[key].fitness[0] > self.children[key].fitness[0]:  # need to switch operator
+            if self.parents[key].fitness < self.children[key].fitness:  # child out competes parent (?)
                 self.parents[key] = self.children[key]
 
     def Show_Best(self):
-        self.most_fit = -1  # set fitness to be as un-fit as possible
+        self.most_fit = 0  # set fitness to be as un-fit as possible
         for key in self.parents.keys():
-            if self.parents[key].fitness[0] > self.most_fit:
-                self.most_fit = self.parents[key].fitness[0]
+            if self.parents[key].fitness > self.most_fit:
+                self.most_fit = self.parents[key].fitness
                 self.most_fit_key = key
         self.parents[self.most_fit_key].Start_Simulation("GUI")
 
