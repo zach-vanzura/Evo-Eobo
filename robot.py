@@ -65,7 +65,7 @@ class ROBOT:
             fitness = (self.both_on_floor / c.MAX_TIME) * self.zPosition
 
         with open(f"tmp{solutionID}.txt", 'w') as f:
-            f.write(fitness)
+            f.write(str(fitness))
 
         os.system(f"mv tmp{solutionID}.txt fitness{solutionID}.txt")
 
