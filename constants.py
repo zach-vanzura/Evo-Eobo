@@ -7,35 +7,16 @@ import numpy as np
 MAX_TIME = 500
 
 # time step motors
-time_step = np.linspace(0, 2 * np.pi, MAX_TIME)
-motor_max_force = 100
-
-
-# general constants for now...
-amplitude = np.pi / 8
-frequency = 60
-phaseOffset = 0
+motor_max_force = 50
 
 # number of sensor and motor neurons
-numSensorNeurons = 3
+numSensorNeurons = 2
 numMotorNeurons = 2
 
-
-# Constants for back leg
-backLegAmplitude = np.pi / 8
-backLegFrequency = 30
-backLegPhaseOffset = 0
-
-# constants for front leg
-frontLegAmplitude = np.pi / 16
-frontLegFrequency = 20
-frontLegPhaseOffset = 2 * np.pi
-
-motorJointRange = 1
+motorJointRange = 1.25 * np.pi
 
 # number of generations for evolutionary alg
-numberOfGenerations = 1
+numberOfGenerations = 10
 
 # population size for PARALLEL HILL CLIMBER
-populationSize = 1
-
+populationSize = 10

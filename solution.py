@@ -58,13 +58,11 @@ class SOLUTION:
 
     def Create_Brain(self):
         pyrosim.Start_NeuralNetwork(f"brain{self.myID}.nndf")
-        pyrosim.Send_Sensor_Neuron(name=0, linkName="Torso")
-        pyrosim.Send_Sensor_Neuron(name=1, linkName="LeftArm")
-        pyrosim.Send_Sensor_Neuron(name=2, linkName="RightArm")
+        pyrosim.Send_Sensor_Neuron(name=0, linkName="LeftArm")
+        pyrosim.Send_Sensor_Neuron(name=1, linkName="RightArm")
 
-        pyrosim.Send_Motor_Neuron(name=3, jointName="Torso_LeftArm")
-        pyrosim.Send_Motor_Neuron(name=4, jointName="Torso_RightArm")
-
+        pyrosim.Send_Motor_Neuron(name=2, jointName="Torso_LeftArm")
+        pyrosim.Send_Motor_Neuron(name=3, jointName="Torso_RightArm")
 
 
         for currentRow in range(c.numSensorNeurons):  # iterate over names of sensor neurons

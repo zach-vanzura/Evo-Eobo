@@ -17,6 +17,9 @@ class ROBOT:
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
         os.system(f"rm brain{solutionID}.nndf")
+        self.left_val = 0
+        self.right_val = 0
+        self.both_on_floor = 0
 
     def Prepare_To_Sense(self):
         self.sensors = {}
@@ -25,9 +28,13 @@ class ROBOT:
 
     def Sense(self, time_step):
         for i in self.sensors:
-            self.sensors[i].Get_Value(time_step)
-            if i == ''
-            with open("sensor_values")
+            val = self.sensors[i].Get_Value(time_step)
+            if i == 'LeftArm':
+                self.left_val = val
+            if i == 'RightArm':
+                self.right_val = val
+        if self.left_val == 1 and self.right_val == 1:
+            self.both_on_floor += 1
 
     def Think(self):
         self.nn.Update()
@@ -50,9 +57,15 @@ class ROBOT:
         self.basePosition = self.basePositionAndOrientation[0]
         self.zPosition = self.basePosition[2]
 
+        # prioritize getting the "hands" on the floor
+        if (self.both_on_floor / c.MAX_TIME) <= 0.75:
+            fitness = self.both_on_floor / c.MAX_TIME
+        # then if hands are on floor for more than 75% of the simulation time, try to make torso invert
+        else:
+            fitness = (self.both_on_floor / c.MAX_TIME) * self.zPosition
 
         with open(f"tmp{solutionID}.txt", 'w') as f:
-            f.write(str(self.zPosition))
+            f.write(fitness)
 
         os.system(f"mv tmp{solutionID}.txt fitness{solutionID}.txt")
 
