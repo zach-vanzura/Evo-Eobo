@@ -16,7 +16,7 @@ numMotorNeurons = 2
 motorJointRange = 1.25 * np.pi
 
 # number of generations for evolutionary alg
-numberOfGenerations = 2
+numberOfGenerations = 10
 
 # population size for PARALLEL HILL CLIMBER
-populationSize = 1
+populationSize = 10

@@ -57,15 +57,10 @@ class ROBOT:
         self.basePosition = self.basePositionAndOrientation[0]
         self.zPosition = self.basePosition[2]
 
-        # prioritize getting the "hands" on the floor
-        if (self.both_on_floor / c.MAX_TIME) <= 0.75:
-            fitness = self.both_on_floor / c.MAX_TIME
-        # then if hands are on floor for more than 75% of the simulation time, try to make torso invert
-        else:
-            fitness = (self.both_on_floor / c.MAX_TIME) * self.zPosition
+        on_floor_ratio = self.both_on_floor / c.MAX_TIME
 
         with open(f"tmp{solutionID}.txt", 'w') as f:
-            f.write(str(fitness))
+            f.write(str(tuple((self.zPosition, on_floor_ratio))))
 
         os.system(f"mv tmp{solutionID}.txt fitness{solutionID}.txt")
 

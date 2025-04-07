@@ -7,6 +7,7 @@ import time
 
 class SOLUTION:
     def __init__(self, availableID):
+        self.fitness = []
         self.myID = availableID
         self.weights = np.random.rand(c.numSensorNeurons, c.numMotorNeurons)  # random 3 X 2 rand array
         self.weights = 2 * self.weights - 1
@@ -25,7 +26,7 @@ class SOLUTION:
             time.sleep(0.01)
 
         with open(f"fitness{self.myID}.txt", 'r') as f:
-            self.fitness = float(f.read())
+            self.fitness.append(float(f.read()[1:3]))
 
         os.system(f"rm fitness{self.myID}.txt")
 
