@@ -27,15 +27,16 @@ class ROBOT:
             self.sensors[linkName] = SENSOR(linkName)
 
     def Sense(self, time_step):
-        for i in self.sensors:
-            val = self.sensors[i].Get_Value(time_step)
-            print(val)
-            if i == 'LeftArm':
+        for linkName in self.sensors:
+            self.sensors[linkName].Get_Value(time_step)  # this is wrong!
+            val = self.sensors[linkName].values[time_step]
+            if linkName == 'LeftArm':
                 self.left_val = val
-            if i == 'RightArm':
+            if linkName == 'RightArm':
                 self.right_val = val
         if self.left_val == 1 and self.right_val == 1:
             self.both_on_floor += 1
+
 
     def Think(self):
         self.nn.Update()
@@ -60,9 +61,9 @@ class ROBOT:
         self.zPosition = self.basePosition[2]
 
         on_floor_ratio = self.both_on_floor / c.MAX_TIME
-
+        torso_bottom_Z = self.zPosition - c.torso_height / 2
         with open(f"tmp{solutionID}.txt", 'w') as f:
-            f.write(str((self.zPosition - self.xyPosition)))
+            f.write(str(on_floor_ratio))
 
         os.system(f"mv tmp{solutionID}.txt fitness{solutionID}.txt")
 

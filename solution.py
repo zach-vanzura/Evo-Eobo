@@ -18,7 +18,7 @@ class SOLUTION:
         self.Create_Body()
         self.Create_Brain()
 
-        os.system("python3.11 simulate.py " + directOrGUI + f" {self.myID}" + " &")
+        os.system("python3.11 simulate.py " + directOrGUI + f" {self.myID}" + " 2&>1")
 
     def Wait_For_Simulation_To_End(self):
         # allow for the program to create the necessary fitness.txt file for the robot
@@ -44,16 +44,27 @@ class SOLUTION:
 
         # creating torso and arms, all with absolute positions
 
-        pyrosim.Send_Cube(name="Torso", pos=[0, 0, 0.8], size=[1, 0.5, 1.6])
+        pyrosim.Send_Cube(name="Torso", pos=[0, 0, c.torso_height], size=[1, 0.5, c.torso_length])
 
         pyrosim.Send_Joint(name="Torso_LeftArm", parent="Torso", child="LeftArm", type="revolute",
-                           position=[-0.125, 0, 1.2], jointAxis="1 0 0")
+                           position=[-0.125, 0, c.shoulder_height], jointAxis="1 0 0")
 
-        pyrosim.Send_Cube(name="LeftArm", pos=[-0.5, 0, 0.8], size=[0.25, 0.25, 1.6])
+        pyrosim.Send_Cube(name="LeftArm", pos=[-0.5, 0, c.arm_height], size=[0.25, 0.25, c.arm_length])
 
         pyrosim.Send_Joint(name="Torso_RightArm", parent="Torso", child="RightArm", type="revolute",
-                           position=[0.125, 0, 1.2], jointAxis="1 0 0")
-        pyrosim.Send_Cube(name="RightArm", pos=[0.5, 0, 0.8], size=[0.25, 0.25, 1.6])
+                           position=[0.125, 0, c.shoulder_height], jointAxis="1 0 0")
+
+        pyrosim.Send_Cube(name="RightArm", pos=[0.5, 0, c.arm_height], size=[0.25, 0.25, c.arm_length])
+
+        pyrosim.Send_Joint("Torso_LeftLeg", parent="Torso", child="LeftLeg", type="revolute",
+                           position=[-0.15, 0, c.hip_height], jointAxis="1 0 0")
+
+        pyrosim.Send_Cube(name="LeftLeg", pos=[-0.15, 0, c.leg_height], size=[0.3, 0.3, c.leg_length])
+
+        pyrosim.Send_Joint("Torso_RightLeg", parent="Torso", child="RightLeg", type="revolute",
+                           position=[0.15, 0, c.hip_height], jointAxis="1 0 0")
+
+        pyrosim.Send_Cube(name="RightLeg", pos=[0.15, 0, c.leg_height], size=[0.3, 0.3, c.leg_length])
 
         pyrosim.End()
 
@@ -61,9 +72,13 @@ class SOLUTION:
         pyrosim.Start_NeuralNetwork(f"brain{self.myID}.nndf")
         pyrosim.Send_Sensor_Neuron(name=0, linkName="LeftArm")
         pyrosim.Send_Sensor_Neuron(name=1, linkName="RightArm")
+        pyrosim.Send_Sensor_Neuron(name=2, linkName="LeftLeg")
+        pyrosim.Send_Sensor_Neuron(name=3, linkName="RightLeg")
 
-        pyrosim.Send_Motor_Neuron(name=2, jointName="Torso_LeftArm")
-        pyrosim.Send_Motor_Neuron(name=3, jointName="Torso_RightArm")
+        pyrosim.Send_Motor_Neuron(name=4, jointName="Torso_LeftArm")
+        pyrosim.Send_Motor_Neuron(name=5, jointName="Torso_RightArm")
+        pyrosim.Send_Motor_Neuron(name=6, jointName="Torso_LeftLeg")
+        pyrosim.Send_Motor_Neuron(name=7, jointName="Torso_RightLeg")
 
 
         for currentRow in range(c.numSensorNeurons):  # iterate over names of sensor neurons
