@@ -63,7 +63,7 @@ class ROBOT:
         on_floor_ratio = self.both_on_floor / c.MAX_TIME
         torso_bottom_Z = self.zPosition - c.torso_height / 2
         with open(f"tmp{solutionID}.txt", 'w') as f:
-            f.write(str(on_floor_ratio))
+            f.write(str((torso_bottom_Z * 2) * on_floor_ratio))
 
         os.system(f"mv tmp{solutionID}.txt fitness{solutionID}.txt")
 

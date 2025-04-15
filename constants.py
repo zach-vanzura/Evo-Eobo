@@ -7,7 +7,7 @@ import numpy as np
 MAX_TIME = 10000
 
 # time step motors
-motor_max_force = 100
+motor_max_force = 150
 
 # number of sensor and motor neurons
 numSensorNeurons = 4
@@ -22,13 +22,13 @@ leg_length = torso_length * 1.2
 torso_height = (torso_length * 0.5) + leg_length
 shoulder_height = torso_length + leg_length  # shoulders at the top of the torso
 hip_height = leg_length  # hips at the top of the legs (bottom of the torso!)
-arm_height = -arm_length * 0.5  # arms start at shoulders and go down
+arm_height = arm_length * 0.5  # arms start at shoulders and go down
 leg_height = -hip_height * 0.5  # legs below hips
 
-motorJointRange = 0 #.45 * np.pi
+motorJointRange = 1 * np.pi
 
 # number of generations for evolutionary alg
-numberOfGenerations = 1
+numberOfGenerations = 10
 
 # population size for PARALLEL HILL CLIMBER
-populationSize = 1
+populationSize = 10
