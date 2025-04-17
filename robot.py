@@ -17,9 +17,12 @@ class ROBOT:
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
         os.system(f"rm brain{solutionID}.nndf")
-        self.left_val = 0
-        self.right_val = 0
-        self.both_on_floor = 0
+        self.left_arm_val = 0
+        self.right_arm_val = 0
+        self.left_leg_val = 0
+        self.right_leg_val = 0
+        self.hands_on_floor = 0
+        self.feet_in_air = 0
 
     def Prepare_To_Sense(self):
         self.sensors = {}
@@ -31,11 +34,17 @@ class ROBOT:
             self.sensors[linkName].Get_Value(time_step)  # this is wrong!
             val = self.sensors[linkName].values[time_step]
             if linkName == 'LeftArm':
-                self.left_val = val
+                self.left_arm_val = val
             if linkName == 'RightArm':
-                self.right_val = val
-        if self.left_val == 1 and self.right_val == 1:
-            self.both_on_floor += 1
+                self.right_arm_val = val
+            if linkName == 'LeftLeg':
+                self.left_leg_val = val
+            if linkName == 'RightLeg':
+                self.right_leg_val = val
+        if self.left_arm_val == 1 and self.right_arm_val == 1:
+            self.hands_on_floor += 1
+        if self.left_arm_val == 1 and self.right_arm_val == 1:
+            self.feet_in_air += 1
 
 
     def Think(self):
@@ -60,10 +69,11 @@ class ROBOT:
         self.xyPosition = abs(self.basePosition[1] - self.basePosition[0])
         self.zPosition = self.basePosition[2]
 
-        on_floor_ratio = self.both_on_floor / c.MAX_TIME
-        torso_bottom_Z = self.zPosition - c.torso_height / 2
+        on_floor_ratio = self.hands_on_floor / c.MAX_TIME
+        in_air_ratio = self.feet_in_air / c.MAX_TIME
+        torso_bottom_Z = self.zPosition - c.torso_height / 2 - self.xyPosition
         with open(f"tmp{solutionID}.txt", 'w') as f:
-            f.write(str((torso_bottom_Z * 2) * on_floor_ratio))
+            f.write(str(on_floor_ratio * torso_bottom_Z * in_air_ratio))
 
         os.system(f"mv tmp{solutionID}.txt fitness{solutionID}.txt")
 
