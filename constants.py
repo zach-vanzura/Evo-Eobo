@@ -4,10 +4,10 @@ File for simulate.py meant to keep track of constants
 import numpy as np
 
 # max simulation run time
-MAX_TIME = 500
+MAX_TIME = 1000
 
 # time step motors
-motor_max_force = 125
+motor_max_force = 175
 
 # number of sensor and motor neurons
 numSensorNeurons = 4
@@ -25,10 +25,10 @@ hip_height = leg_length  # hips at the top of the legs (bottom of the torso!)
 arm_height = arm_length * 0.5  # arms start at shoulders and go down
 leg_height = -hip_height * 0.5  # legs below hips
 
-motorJointRange = .5 * np.pi
+motorJointRange = .3 * np.pi
 
 # number of generations for evolutionary alg
-numberOfGenerations = 20
+numberOfGenerations = 50
 
 # population size for PARALLEL HILL CLIMBER
-populationSize = 30
+populationSize = 20

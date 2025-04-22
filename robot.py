@@ -1,3 +1,5 @@
+import numpy as np
+
 import constants as c
 from motor import MOTOR
 import os
@@ -64,17 +66,42 @@ class ROBOT:
                 self.motors[jointName].Set_Value(self.robotId, desiredAngle)
 
     def Get_Fitness(self, solutionID):
-        self.basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)
-        self.basePosition = self.basePositionAndOrientation[0]
-        self.xyPosition = abs(self.basePosition[1] - self.basePosition[0])
-        self.zPosition = self.basePosition[2]
+        # self.xyPosition = abs(self.basePosition[1] - self.basePosition[0])
+        # self.zPosition = self.basePosition[2]
+
+        goal_orientation = np.array([1, 0, 0, 0])  # upside down
+        orns = self.get_orientations()
+        mean_orn = 1  # 1 because multiplying
+        for orn in orns:
+            mean_orn *= np.abs(np.dot(goal_orientation, orn))
+        mean_orn /= len(orns)
+
 
         on_floor_ratio = self.hands_on_floor / c.MAX_TIME
         in_air_ratio = self.feet_in_air / c.MAX_TIME
-        torso_bottom_Z = self.zPosition - c.torso_height / 2 - self.xyPosition
+        if on_floor_ratio + in_air_ratio > 0:
+            hands_and_feet_normalized = (on_floor_ratio * in_air_ratio) / (on_floor_ratio + in_air_ratio)
+        else:
+            hands_and_feet_normalized = 0
+        # torso_bottom_z_normalized = (self.zPosition - c.torso_height / 2) / (c.leg_length + c.torso_length)
+
+        torso = np.abs(np.dot(goal_orientation, self.torso_orientation))
         with open(f"tmp{solutionID}.txt", 'w') as f:
-            f.write(str(on_floor_ratio * torso_bottom_Z * in_air_ratio))
+            f.write(str(hands_and_feet_normalized * torso))
 
         os.system(f"mv tmp{solutionID}.txt fitness{solutionID}.txt")
 
+    def get_orientations(self):
+        quats = []
+
+        links = ['LeftArm', 'RightArm', 'LeftLeg', 'RightLeg']
+        self._torso_orientation = p.getBasePositionAndOrientation(self.robotId)
+        self.torso_orientation = np.array(self._torso_orientation[1])
+
+        quats.append(self.torso_orientation)
+        for link in links:
+            orn_ = pyrosim.Get_Orientations_For_Link(self.robotId, link)
+            orn = np.array(orn_[1])
+            quats.append(orn)
+        return quats
 

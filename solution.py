@@ -9,7 +9,7 @@ class SOLUTION:
     def __init__(self, availableID):
         self.fitness = None
         self.myID = availableID
-        self.weights = np.random.rand(c.numSensorNeurons, c.numMotorNeurons)  # random 3 X 2 rand array
+        self.weights = np.random.rand(c.numSensorNeurons, c.numMotorNeurons)
         self.weights = 2 * self.weights - 1
 
 
