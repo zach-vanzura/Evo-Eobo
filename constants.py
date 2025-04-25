@@ -25,7 +25,7 @@ hip_height = leg_length  # hips at the top of the legs (bottom of the torso!)
 arm_height = arm_length * 0.5  # arms start at shoulders and go down
 leg_height = -hip_height * 0.5  # legs below hips
 
-motorJointRange = .5 * np.pi
+motorJointRange = .3 * np.pi
 
 # number of generations for evolutionary alg
 numberOfGenerations = 50
