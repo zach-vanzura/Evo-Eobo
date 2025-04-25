@@ -77,7 +77,7 @@ class ROBOT:
             hands_and_feet_normalized = 0
         torso_bottom_Z = self.zPosition - c.torso_height / 2 - self.xyPosition
         with open(f"tmp{solutionID}.txt", 'w') as f:
-            f.write(str(on_floor_ratio * torso_bottom_Z * in_air_ratio))
+            f.write(str(hands_and_feet_normalized * torso_bottom_Z))
 
         os.system(f"mv tmp{solutionID}.txt fitness{solutionID}.txt")
 
