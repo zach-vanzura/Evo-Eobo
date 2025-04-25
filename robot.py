@@ -71,6 +71,10 @@ class ROBOT:
 
         on_floor_ratio = self.hands_on_floor / c.MAX_TIME
         in_air_ratio = self.feet_in_air / c.MAX_TIME
+        if on_floor_ratio + in_air_ratio > 0:
+            hands_and_feet_normalized = (on_floor_ratio * in_air_ratio) / (on_floor_ratio + in_air_ratio)
+        else:
+            hands_and_feet_normalized = 0
         torso_bottom_Z = self.zPosition - c.torso_height / 2 - self.xyPosition
         with open(f"tmp{solutionID}.txt", 'w') as f:
             f.write(str(on_floor_ratio * torso_bottom_Z * in_air_ratio))
