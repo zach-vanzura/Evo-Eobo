@@ -32,3 +32,5 @@ numberOfGenerations = 50
 
 # population size for PARALLEL HILL CLIMBER
 populationSize = 20
+
+numberOfEpochs = 2
