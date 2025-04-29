@@ -15,7 +15,7 @@ class PARALLEL_HILL_CLIMBER:
         from the previous generation if the aforementioned data exits
         """
         # load serialized and pickled data.
-        if os.path.exists(c.pickle_file):
+        if os.path.exists(c.pickle_file) and os.path.getsize(c.pickle_file) > 0:
             with open(c.pickle_file, 'rb') as pf:
                 genotype = pickle.load(pf)
                 for p in range(c.populationSize):
