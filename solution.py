@@ -8,6 +8,7 @@ import time
 class SOLUTION:
     def __init__(self, availableID):
         self.fitness = None
+        self.fitness_standardized = None
         self.myID = availableID
         self.weights = np.random.rand(c.numSensorNeurons, c.numMotorNeurons)
         self.weights = 2 * self.weights - 1
@@ -28,7 +29,11 @@ class SOLUTION:
         with open(f"fitness{self.myID}.txt", 'r') as f:
             self.fitness = float(f.read())
 
+        with open(f"fitness_standardized{self.myID}.txt", 'r') as f:
+            self.fitness_standardized = float(f.read())
+
         os.system(f"rm fitness{self.myID}.txt")
+        os.system(f"rm fitness_standardized{self.myID}.txt")
 
     def Set_ID(self, availableID):
         self.myID = availableID

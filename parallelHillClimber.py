@@ -81,7 +81,7 @@ class PARALLEL_HILL_CLIMBER:
                 self.most_fit_key = key
         # save the best fit
         with open("most_fit_saved.txt", 'a') as f:
-            f.write(str(self.parents[self.most_fit_key].fitness) + '\n')
+            f.write(str(self.parents[self.most_fit_key].fitness_standardized) + '\n')
 
 
 

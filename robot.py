@@ -91,7 +91,13 @@ class ROBOT:
         with open(f"tmp{solutionID}.txt", 'w') as f:
             f.write(str(hands_and_feet_normalized * torso))
 
+        # standardized fitness for A/B testing
+        with open(f"tmp_standardized{solutionID}.txt", 'w') as f:
+            f.write((str(hands_and_feet_normalized)))
+
         os.system(f"mv tmp{solutionID}.txt fitness{solutionID}.txt")
+        os.system(f"mv tmp_standardized{solutionID}.txt fitness_standardized{solutionID}.txt")
+
 
     def get_orientations(self):
         quats = []
