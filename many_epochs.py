@@ -13,9 +13,11 @@ import constants as c
 
 for e in range(c.numberOfEpochs):
     print("Epoch Number:", e)
-    os.system("python3.11 search.py 1")
     if e == c.numberOfEpochs - 1:
         os.system("python3.11 search.py")
+    else:
+        os.system("python3.11 search.py 1")
+
 
 # most_fit_saved.txt
 # TODO: With the saved data of each most fit child at each epoch, plot the trend of fitness
