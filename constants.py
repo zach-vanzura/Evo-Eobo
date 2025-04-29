@@ -28,9 +28,11 @@ leg_height = -hip_height * 0.5  # legs below hips
 motorJointRange = .3 * np.pi
 
 # number of generations for evolutionary alg
-numberOfGenerations = 50
+numberOfGenerations = 10
 
 # population size for PARALLEL HILL CLIMBER
-populationSize = 20
+populationSize = 10
 
 numberOfEpochs = 2
+
+pickle_file = "previous_epoch_pickled.pkl"
