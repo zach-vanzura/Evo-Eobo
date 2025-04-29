@@ -86,6 +86,8 @@ class ROBOT:
         # torso_bottom_z_normalized = (self.zPosition - c.torso_height / 2) / (c.leg_length + c.torso_length)
 
         torso = np.abs(np.dot(goal_orientation, self.torso_orientation))
+        left_arm = np.abs(np.dot(goal_orientation, orns[0]))
+        right_arm = np.abs(np.dot(goal_orientation, orns[1]))
         with open(f"tmp{solutionID}.txt", 'w') as f:
             f.write(str(hands_and_feet_normalized * torso))
 

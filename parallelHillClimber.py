@@ -1,6 +1,7 @@
 import copy
 import constants as c
 import os
+import pickle
 from solution import SOLUTION
 
 class PARALLEL_HILL_CLIMBER:
@@ -9,9 +10,22 @@ class PARALLEL_HILL_CLIMBER:
         os.system("rm fitness*.txt")
         self.nextAvailableID = 0
         self.parents = {}
-        for p in range(c.populationSize):
-            self.parents[p] = SOLUTION(self.nextAvailableID)
-            self.nextAvailableID += 1
+        """
+        in each generation of the PHC (which has multiple associated generations), we load the most fit data 
+        from the previous generation if the aforementioned data exits
+        """
+        # load serialized and pickled data.
+        if os.path.exists(c.pickle_file):
+            with open(c.pickle_file, 'rb') as pf:
+                genotype = pickle.load(pf)
+                for p in range(c.populationSize):
+                    self.parents[p] = genotype[p]
+                    self.nextAvailableID += 1
+        # running PHC for first time, no data to latch on to
+        else:
+            for p in range(c.populationSize):
+                self.parents[p] = SOLUTION(self.nextAvailableID)
+                self.nextAvailableID += 1
 
 
     def Evolve(self):
@@ -52,12 +66,23 @@ class PARALLEL_HILL_CLIMBER:
                 self.parents[key] = self.children[key]
 
     def Show_Best(self):
+        self.parents[self.most_fit_key].Start_Simulation("GUI")
+
+    def Save_Best(self):
+        # pickle all final fitness for the next epoch
+        with open(c.pickle_file, 'wb') as pf:
+            pickle.dump(self.parents, pf)
+
+        # find the best fit of the epoch
         self.most_fit = -1 * float('inf')  # set fitness to be as un-fit as possible
         for key in self.parents.keys():
             if self.parents[key].fitness > self.most_fit:
                 self.most_fit = self.parents[key].fitness
                 self.most_fit_key = key
-        self.parents[self.most_fit_key].Start_Simulation("GUI")
+        # save the best fit
+        with open("most_fit_saved.txt", 'a') as f:
+            f.write(str(self.parents[self.most_fit_key].fitness) + '\n')
+
 
 
     def Print(self):
