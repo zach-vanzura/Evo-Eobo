@@ -5,7 +5,7 @@ import sys
 try:
     many_epochs = sys.argv[1]
 except IndexError:
-    many_epochs= False
+    many_epochs = False
 
 
 phc = PARALLEL_HILL_CLIMBER()

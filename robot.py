@@ -75,6 +75,12 @@ class ROBOT:
         for orn in orns:
             mean_orn *= np.abs(np.dot(goal_orientation, orn))
         mean_orn /= len(orns)
+        torso_orn = np.abs(np.dot(goal_orientation, self.torso_orientation))
+
+        self.torso_position = np.array(self._torso_orientation[0])
+        goal_position = np.array([0, 0, c.torso_height])
+        torso_pos = np.abs(np.dot(goal_position, self.torso_position))
+        torso_wander = torso_pos * torso_orn
 
 
         on_floor_ratio = self.hands_on_floor / c.MAX_TIME
@@ -85,11 +91,10 @@ class ROBOT:
             hands_and_feet_normalized = 0
         # torso_bottom_z_normalized = (self.zPosition - c.torso_height / 2) / (c.leg_length + c.torso_length)
 
-        torso = np.abs(np.dot(goal_orientation, self.torso_orientation))
         left_arm = np.abs(np.dot(goal_orientation, orns[0]))
         right_arm = np.abs(np.dot(goal_orientation, orns[1]))
         with open(f"tmp{solutionID}.txt", 'w') as f:
-            f.write(str(hands_and_feet_normalized * torso))
+            f.write(str(hands_and_feet_normalized * torso_wander))
 
         # standardized fitness for A/B testing
         with open(f"tmp_standardized{solutionID}.txt", 'w') as f:
