@@ -10,6 +10,7 @@ class PARALLEL_HILL_CLIMBER:
         os.system("rm fitness*.txt")
         self.nextAvailableID = 0
         self.parents = {}
+        self.most_fit_key = 0
         """
         in each generation of the PHC (which has multiple associated generations), we load the most fit data 
         from the previous generation if the aforementioned data exits
@@ -34,6 +35,11 @@ class PARALLEL_HILL_CLIMBER:
         for currentGen in range(c.numberOfGenerations):
             print("Generation Number:", currentGen)
             self.Evolve_For_One_Generation()
+            with open(os.path.join('proof_of_evolution', 'un_evolved_robot.txt',), 'a') as f:
+                try:
+                    f.write(str(self.parents[self.most_fit_key].fitness) + '\n')
+                except AttributeError:
+                    f.write(str(0))
 
     def Evolve_For_One_Generation(self):
         self.Spawn()
@@ -64,6 +70,8 @@ class PARALLEL_HILL_CLIMBER:
         for key in self.parents.keys():
             if self.parents[key].fitness < self.children[key].fitness:  # child out competes parent (?)
                 self.parents[key] = self.children[key]
+            if self.parents[key].fitness > self.parents[self.most_fit_key].fitness:
+                self.most_fit_key = key
 
     def Show_Best(self):
         self.parents[self.most_fit_key].Start_Simulation("GUI")

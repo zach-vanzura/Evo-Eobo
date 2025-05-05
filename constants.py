@@ -33,7 +33,7 @@ numberOfGenerations = 20
 # population size for PARALLEL HILL CLIMBER
 populationSize = 50
 
-numberOfEpochs = 23
+numberOfEpochs = 20
 
 pickle_file = "previous_epoch_pickled.pkl"
 
